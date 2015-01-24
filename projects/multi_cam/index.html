@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Multi Cams</title>
+    <style>
+      html, body {
+        width: 2048px;
+        height: 768px;
+        padding: 0;
+        margin: 0;
+      }
+      .stage {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .video-container {
+        position: absolute;
+        width: 320px;
+        height: 240px;
+        background: silver;
+        opacity: 0;
+        font-size: 60px;
+        color: white;
+        transition: opacity 1s;
+        -webkit-filter: grayscale(1);
+      }
+      .video-container.show {
+        opacity: 1;
+      }
+      .video-container.mirror {
+        transform: scaleX(-1);
+      }
+      .video-container[data-pos="left"] {
+        left: 0;
+        top: 0;
+      }
+      .video-container[data-pos="right"] {
+        left: 320px;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage"></div>
+    <div id="messages"></div>
+    <script type="text/javascript" src="js/adapter.js"></script>
+    <script type="text/javascript" src="js/video_container.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
