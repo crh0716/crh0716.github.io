@@ -1,15 +1,10 @@
 'use strict';
 
-var WIDTH = 320;
-var HEIGHT = 240;
-
 function VideoContainer(stream, options) {
   this._root = document.createElement('div');
   this._root.className = 'video-container';
 
   this._video = document.createElement('video');
-  this._video.width = WIDTH;
-  this._video.height = HEIGHT;
   this._video.autoplay = true;
 
   this.setPosition((options && options.pos) || 'left');
@@ -17,6 +12,7 @@ function VideoContainer(stream, options) {
   if (options && options.visible) {
     this.show();
   }
+  this.setSize(1024, 768);
 
   this._root.appendChild(this._video);
   this.setStream(stream);
@@ -34,6 +30,11 @@ VideoContainer.prototype.setStream = function(stream) {
 
 VideoContainer.prototype.setPosition = function(pos) {
   this._root.dataset.pos = pos;
+};
+
+VideoContainer.prototype.setSize = function(width, height) {
+  this._video.width = width;
+  this._video.height = height;
 };
 
 VideoContainer.prototype.setMirror = function(mirror) {

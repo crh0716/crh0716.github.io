@@ -1,7 +1,7 @@
 'use strict';
 
-var VIDEO_WIDTH = 320;
-var VIDEO_HEIGHT = 240;
+var VIDEO_WIDTH = 1280;
+var VIDEO_HEIGHT = 720;
 
 function getSources(type) {
   if (typeof MediaStreamTrack.getSources === 'undefined') {
@@ -40,7 +40,39 @@ function requestVideo(id) {
   });
 }
 
+function toggleFullScreen() {
+  if (!document.fullscreenElement &&    // alternative standard method
+      !document.mozFullScreenElement && 
+      !document.webkitFullscreenElement && 
+      !document.msFullscreenElement ) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement
+      .webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+
 window.onload = function() {
+  document.addEventListener('click', function() {
+    toggleFullScreen();
+  });
+  
   getSources('video').then(function(sources) {
     return Promise.all(sources.map(function(source) {
       return requestVideo(source.id);
